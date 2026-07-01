@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Visualizador AR</title>
+
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    background:#000;
+    overflow:hidden;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+model-viewer{
+    width:100%;
+    height:100%;
+    background:#000;
+}
+
+#loading{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    background:#000;
+    z-index:100;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="loading">
+    Cargando modelo...
+</div>
+
+<model-viewer
+    id="viewer"
+
+    src="formarara7.glb"
+
+    ios-src="formarara2.usdz"
+
+    poster="poster.jpg"
+
+    ar
+    ar-modes="scene-viewer quick-look webxr"
+
+    camera-controls
+
+    auto-rotate
+
+    shadow-intensity="1"
+
+    exposure="1"
+
+    loading="eager"
+
+    reveal="auto"
+
+    touch-action="pan-y"
+
+    alt="Modelo 3D">
+
+</model-viewer>
+
+<script>
+
+const viewer = document.querySelector("#viewer");
+
+viewer.addEventListener("load", () => {
+    document.getElementById("loading").style.display = "none";
+});
+
+// Intentar abrir AR automáticamente.
+// En muchos navegadores móviles esto será bloqueado por requerir
+// una interacción del usuario.
+window.addEventListener("load", () => {
+
+    if(viewer.canActivateAR){
+
+        setTimeout(() => {
+            viewer.activateAR();
+        },500);
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
